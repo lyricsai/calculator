@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Calculator</title>
+    </head>
+    <body>
+        <form oninput="()=>calculator()">
+            <input type="text" id="first__number" />
+            <span id="func"></span>
+            <input type="text" id="second__number" /> =
+            <output
+                name="output"
+                for="first__number second__number"
+                id="output"
+            ></output>
+
+            <div class="buttons__func" id="buttons__func">
+                <button type="button">+</button>
+                <button type="button">-</button>
+                <button type="button">*</button>
+                <button type="button">/</button>
+                <button type="button">**</button>
+                <button type="button">!</button>
+            </div>
+
+            <div class="buttons__numbers" id="buttons__numbers">
+                <button type="button">1</button>
+                <button type="button">2</button>
+                <button type="button">3</button>
+                <button type="button">4</button>
+                <button type="button">5</button>
+                <button type="button">6</button>
+                <button type="button">7</button>
+                <button type="button">8</button>
+                <button type="button">9</button>
+                <button type="button">0</button>
+            </div>
+
+            <div class="buttons__func_2">
+                <button type="button">.</button>
+                <button type="button" id="negative">+/-</button>
+                <button type="button" id="equal">=</button>
+                <button type="button" id="clear">AC</button>
+            </div>
+        </form>
+        <script src="./script.js"></script>
+    </body>
+</html>
