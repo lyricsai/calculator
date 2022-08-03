@@ -13,12 +13,9 @@ const palindrome = (string) => {
 };
 
 // add, subtract, get the sum, multiply, get the power, and find the factorial
-const first__numberString = document.querySelector("#first__number");
-const second__numberString = document.querySelector("#second__number");
-
-const func = document.querySelector("#func");
-const negative = document.querySelector("#negative");
 const output = document.querySelector("#output");
+
+const negative = document.querySelector("#negative");
 const equal = document.querySelector("#equal");
 const clear = document.querySelector("#clear");
 
@@ -30,10 +27,9 @@ let result = 0;
 const calculator = ({action, first__number, second__number}) => {
     first__number = +first__number;
     second__number = +second__number;
-
-    console.log(actions[action](first__number, second__number));
-    return actions[action](first__number, second__number);
-
+    let res = actions[action](first__number, second__number);
+    if(res === +(res).toFixed(2)) {return res;}
+    return +res.toFixed(2);
 };
 
 const minus = (first__number, second__number) => first__number - second__number;
@@ -55,10 +51,21 @@ const factorial = (first__number) => {
     return val;
 };
 
+const toggleNegative = (num) => num * (-1);
+
+const state = {
+    action: null,
+    first__number: '',
+    second__number: '',
+    result: null
+};
+
 const reset = () => {
-    first__numberString.value = "";
-    second__numberString.value = "";
     output.value = "";
+    state.first__number = "";
+    state.second__number = "";
+    state.action = "";
+    state.result = "";
 };
 
 const actions = {
@@ -70,46 +77,78 @@ const actions = {
     "!": factorial,
 };
 
-const state = {
-    action: null,
-    first__number: first__numberString?.value || '',
-    second__number: second__numberString?.value || '',
-    result: null
-};
-
 buttons__func.forEach(e => {
     e.addEventListener('click', () => {
+
+        if(!state.first__number) {return;}
+
+        if(state.first__number && state.second__number && state.action) {
+            state.first__number = calculator(state);
+            output.value = e.innerText;
+            state.action = e.innerText;
+            state.second__number = '';
+            state.result = '';
+        }
+
         state.action = e.innerText;
-        func.innerText = e.innerText;
+        output.value = e.innerText;
     });
 });
 
 buttons__numbers.forEach(e => {
+
     e.addEventListener('click', () => {
-        console.log(e.innerText);
+
+        console.log(output.value == 0);
+        if(output.value == 0) {output.value = '';}
+
+        if(state.result) {
+            output.value = '';
+            state.result = '';
+        };
+
         if(!state.action) {
             state.first__number += e.innerText;
-            first__numberString.value += e.innerText;
-            console.log(state.first__number);
+            output.value += e.innerText;
         }
         else {
+            if(output.value === state.action) {output.value = '';}
             state.second__number += e.innerText;
-            second__numberString.value += e.innerText;
-            console.log(state.second__number);
+            output.value += e.innerText;
         }
+        console.log(state);
     });
 });
 
 equal.addEventListener('click', () => {
-    console.log(state);
+
+    if(state.action === '!') {
+        let res = factorial(state.first__number);
+        reset();
+        output.value = res;
+        state.result = res;
+    }
+
     if(state.action && state.first__number && state.second__number) {
         let res = calculator(state);
+        reset();
         output.value = res;
-        state.action = '';
-        state.first__number = '';
-        state.second__number = '';
-        console.log(state);
-    } else {return;}
+        state.result = res;
+    } else {
+        return;
+    }
+    console.log(state);
+});
+
+negative.addEventListener('click', (e) => {
+    console.log('negative');
+    if(state.first__number) {
+        state.first__number = toggleNegative(state.first__number);
+        output.value = state.first__number;
+    } else {
+        state.second__number = toggleNegative(state.second__number);
+        output.value = state.second__number;
+    }
 });
 
 clear.addEventListener('click', () => reset());
