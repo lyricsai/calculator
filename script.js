@@ -1,18 +1,3 @@
-const palindrome = (string) => {
-    let str = string
-        .replace(/[\s.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-        .toLowerCase()
-        .split("")
-        .reverse()
-        .join("");
-
-    return (
-        str ===
-        string.replace(/[\s.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").toLowerCase()
-    );
-};
-
-// add, subtract, get the sum, multiply, get the power, and find the factorial
 const output = document.querySelector("#output");
 
 const negative = document.querySelector("#negative");
@@ -21,8 +6,6 @@ const clear = document.querySelector("#clear");
 
 const buttons__func = [...document.querySelectorAll("#buttons__func button")];
 const buttons__numbers = [...document.querySelectorAll("#buttons__numbers button")];
-
-let result = 0;
 
 const calculator = ({action, first__number, second__number}) => {
     first__number = +first__number;
@@ -99,7 +82,6 @@ buttons__numbers.forEach(e => {
 
     e.addEventListener('click', () => {
 
-        console.log(output.value == 0);
         if(output.value == 0) {output.value = '';}
 
         if(state.result) {
@@ -116,7 +98,7 @@ buttons__numbers.forEach(e => {
             state.second__number += e.innerText;
             output.value += e.innerText;
         }
-        console.log(state);
+
     });
 });
 
@@ -137,11 +119,11 @@ equal.addEventListener('click', () => {
     } else {
         return;
     }
-    console.log(state);
+
 });
 
 negative.addEventListener('click', (e) => {
-    console.log('negative');
+
     if(state.first__number) {
         state.first__number = toggleNegative(state.first__number);
         output.value = state.first__number;
